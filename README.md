@@ -110,11 +110,8 @@ By default the service listens on port `8081` and exposes `/verify/tdx-quote`, `
 cd relying-application
 npm install
 
-# Configure service endpoints before starting the dev server
-cat <<'EOF' >.env
-VITE_ATTESTER_URL=https://<evidence-provider-host>:8080
-VITE_VERIFIER_URL=https://<evidence-verifier-host>:8081
-EOF
+cp .env.example .env
+# Update VITE_ATTESTER_URL and VITE_VERIFIER_URL to point at your deployments
 
 npm run dev
 ```
