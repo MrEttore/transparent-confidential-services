@@ -1,16 +1,16 @@
-# Relying Application — Attestation UI Walkthrough
+# Relying Application - Attestation UI Walkthrough
 
 The relying application is a React + TypeScript single-page experience that lets end users orchestrate the full attestation round-trip before sharing sensitive data. This guide focuses on the attestation feature (`src/features/attestation`) and explains how the UI surfaces the challenge generation, evidence collection, and verification phases defined in the paper.
 
-## Attestation Workflow Overview
+## Attestation Experience Overview
 
-The UI guides the user through three stages:
+The attestation page layers three complementary surfaces that keep the user oriented across protocol execution and post-verification transparency.
 
-1. **Generate Challenge:** create a fresh 64-byte nonce on the client, display it, and cache it in Redux state.
-2. **Gather Evidence:** call the Evidence Provider to retrieve quote, workload, and infrastructure bundles bound to the challenge.
-3. **Verify Evidence:** submit each evidence bundle to the Evidence Verifier and review the signed verdicts before continuing.
+- `AttestationTimeline` orchestrates the core attestation protocol: generating a client-side nonce, gathering quote/workload/infrastructure evidence, and submitting those bundles for verification through the modal system.
+- `CloudInfrastructureOverview` presents the attested runtime once evidence arrives, summarizing VM metadata and container inventory with drill-down inspectors for disks, instance identity, and per-container JSON.
+- `IndependentVerificationResources` curates external artifacts so auditors can reproduce the attestation independently, including container images, verifier binaries, and baseline manifests.
 
-The following sections break down how the main parent components visualize each stage and expose advanced tooling for power users.
+The following sections break down how the main parent components visualize each attestation stage.
 
 ## `AttestationTimeline`
 
@@ -24,13 +24,8 @@ The following sections break down how the main parent components visualize each 
     - `ViewVerificationResult` lists the verdict, timestamps, matching digests, and links back to reference baselines.
 - **Freshness Tracking:** `computeChallengeFreshness` runs on every render to flag reused or stale challenges, reinforcing the nonce requirement described in the paper.
 
-Suggested screenshot placeholders:
-
-```markdown
-![Attestation timeline overview](docs/attestation-timeline-overview.png)
-![Quote evidence modal](docs/attestation-quote-modal.png)
-![Verification result modal](docs/attestation-verification-modal.png)
-```
+![Attestation timeline overview](docs/attestation-timeline.png)
+_Figure 1. Timeline stepper with modal entry points for challenge, evidence, and verification phases._
 
 ## `CloudInfrastructureOverview`
 
@@ -47,13 +42,8 @@ Suggested screenshot placeholders:
 - **Container Inventory:** lists each running container, image digest, creation time, and OCI labels via `WorkloadContainer` tiles. Tapping a tile launches the `ViewContainer` modal with full JSON.
 - **Scrollable Layout:** supports long container lists while preserving context for the summary header and trust badges.
 
-Suggested screenshot placeholders:
-
-```markdown
-![Infrastructure summary card](docs/attestation-infrastructure-summary.png)
-![Workload inventory list](docs/attestation-workloads-list.png)
-![Instance disk modal](docs/attestation-disk-modal.png)
-```
+![Infrastructure summary card](docs/infrastructure-summary.png)
+_Figure 2. Cloud infrastructure overview highlighting VM trust status and workload inventory inspectors._
 
 ## `IndependentVerificationResources`
 
@@ -62,11 +52,8 @@ This section equips users (or auditors) with links to reproduce attestation inde
 - **Resource Grid:** `VerificationResource` cards highlight container images, verifier binaries, and baseline manifests. Each card includes a concise description and external link.
 - **Extensible Layout:** easily extend the grid with additional artifacts such as policy documents or signed SBOMs.
 
-Suggested screenshot placeholders:
-
-```markdown
-![Independent verification resources grid](docs/attestation-independent-resources.png)
-```
+![Independent verification resources grid](docs/independent-verification-resources.png)
+_Figure 3. Resource grid linking reference containers, verifier binaries, and baseline manifests for independent review._
 
 ## Additional UI Capabilities
 
