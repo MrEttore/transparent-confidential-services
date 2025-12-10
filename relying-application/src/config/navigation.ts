@@ -6,7 +6,7 @@ export const navigationItems: NavigationItem[] = [
     { icon: CloudUpload, name: 'Data Sharing', to: '/app/data-sharing' },
     {
         icon: SearchCheck,
-        name: 'Verify Confidentiality',
+        name: 'Attestation',
         to: '/app/attestation',
     },
 ];
