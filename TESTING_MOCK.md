@@ -10,12 +10,12 @@ This guide describes how to test the **TLS-Bound Attestation** flow end-to-end u
 
 ## 1. Start Services
 
-The `docker-compose.yml` is already configured with `MOCK_MODE=true`.
+The `docker-compose.yml` is already configured with `MOCK_MODE=true` and an **Nginx Gateway**.
 
 ```bash
 docker-compose up --build
 ```
-*Wait until all services are running (Provider at :8080, Verifier at :8081).*
+*Wait until all services are running. The Evidence Provider is accessible via the Nginx gateway at `https://localhost:8443`.*
 
 ## 2. Manual Testing Steps
 
@@ -29,11 +29,11 @@ export CHALLENGE_B64="MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMj
 echo "Challenge: $CHALLENGE_B64"
 ```
 
-### Step B: Get Quote from Evidence Provider
-Request a TDX quote. The Provider will bind the challenge AND the TLS fingerprint into the quote.
+### Step B: Get Quote from Evidence Provider (via Nginx Gateway)
+Request a TDX quote through the secure gateway. We use `-k` (insecure) because the certificate is self-signed.
 
 ```bash
-RESPONSE=$(curl -s -X POST http://localhost:8080/evidence/tdx-quote \
+RESPONSE=$(curl -k -s -X POST https://localhost:8443/evidence/tdx-quote \
   -H "Content-Type: application/json" \
   -d "{\"challenge\": \"$CHALLENGE_B64\"}")
 
@@ -51,7 +51,7 @@ echo "Fingerprint: $FINGERPRINT"
 ```
 
 ### Step D: Verify with Evidence Verifier
-Send the extracted data to the Verifier. The Verifier checks that the Quote's `UserData` matches `SHA256(Challenge || Fingerprint)`.
+Send the extracted data to the Verifier (port 8081). The Verifier checks that the Quote's `UserData` matches `SHA256(Challenge || Fingerprint)`.
 
 ```bash
 curl -s -X POST http://localhost:8081/verify/tdx-quote \
@@ -79,21 +79,21 @@ curl -s -X POST http://localhost:8081/verify/tdx-quote \
 
 ## 3. Automated Test Script (One-Liner)
 
-Copy and run this entire block to perform the full test automatically:
+Copy and run this entire block to perform the full test automatically (using the HTTPS gateway):
 
 ```bash
 # 1. Challenge (64 bytes base64)
 CHALLENGE="MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMw=="
 
-# 2. Get Quote
-echo "Fetching Quote..."
-RESP=$(curl -s -X POST http://localhost:8080/evidence/tdx-quote -d "{\"challenge\": \"$CHALLENGE\"}")
+# 2. Get Quote (via HTTPS Gateway :8443)
+echo "Fetching Quote via HTTPS Gateway..."
+RESP=$(curl -k -s -X POST https://localhost:8443/evidence/tdx-quote -d "{\"challenge\": \"$CHALLENGE\"}")
 QUOTE=$(echo $RESP | jq -r '.data.quote')
 FINGERPRINT=$(echo $RESP | jq -r '.data.tlsCertificateFingerprint')
 
 echo "Fingerprint: $FINGERPRINT"
 
-# 3. Verify
+# 3. Verify (via Verifier :8081)
 echo "Verifying..."
 curl -s -X POST http://localhost:8081/verify/tdx-quote \
   -H "Content-Type: application/json" \
