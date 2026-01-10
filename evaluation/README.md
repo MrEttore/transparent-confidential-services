@@ -2,7 +2,7 @@
 
 This folder contains all materials used to evaluate the TCS framework. Our evaluation is structured along two complementary dimensions:
 
-1. **Quantitative (performance)**: measures the performance overhead introduced by the trust minimization
+1. **Quantitative (performance evaluation)**: measures the performance overhead introduced by the trust minimization
    mechanisms.
 2. **Qualitative (trustworthiness security assessment / negative controls)**: validates security-relevant behavior through systematic negative controls and documents expected failure modes.
 

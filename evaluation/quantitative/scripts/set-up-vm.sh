@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_OWNER="MrEttore"
-REPO_NAME="transparent-confidential-services-for-trusted-computations"
+REPO_NAME="transparent-confidential-services"
 REPO_REF="main"
 RAW_BASE="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_REF}"
 
