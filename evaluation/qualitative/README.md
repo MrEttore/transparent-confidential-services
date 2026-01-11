@@ -161,8 +161,8 @@ _Figure 9. Workload verification failure triggered by dispatching a tampered dig
    _Figure 10. Evidence Verifier container pulled and started locally on port 8081._
 
 3. We invoke the Evidence Verifier’s HTTP endpoints (e.g., via `curl` or Postman) using the evidence JSON captured through the Relying Application:
-   - `/verify/tdx-quote` with the issued challenge, url of the baseline manifest, and the quote payload;
-   - `/verify/workloads` with the the issued challenge, workload evidence, and registry reference;
+   - `/verify/tdx-quote` with the issued challenge, url of the baseline manifest, and the quote payload.
+   - `/verify/workloads` with the the issued challenge, workload evidence, and registry reference.
    - `/verify/infrastructure` with the the issued challenge, infrastructure evidence, and baseline manifest url.
 4. We compare each JSON response with the corresponding pass artifacts in `artifacts/attestation-result/*/pass.json`, confirming field-level equality with the UI’s verification outputs.
 
@@ -177,8 +177,8 @@ _Figure 9. Workload verification failure triggered by dispatching a tampered dig
 
 **Expected outcome:**
 
-- Evidence Verifier container runs purely from public inputs and produces the same pass verdicts;
-- No hidden state is required (identical results after restart);
+- Evidence Verifier container runs purely from public inputs and produces the same pass verdicts.
+- No hidden state is required (identical results after restart).
 - UI continues to show transparent links to every artifact consumed.
 
 **Negative control (replay with tampered evidence):**
