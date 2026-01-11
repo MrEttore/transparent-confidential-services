@@ -1,6 +1,6 @@
 ## Cloud Deployment with Terraform
 
-This guide explains how to deploy SanctuAIry securely in the cloud using **Google Cloud confidential VMs** and Terraform. Follow these steps to run the LLM Core in a secure, hardware-based Trusted Execution Environment (TEE).
+This guide explains how to deploy Transparent Service securely in the cloud using **Google Cloud confidential VMs** and Terraform. Follow these steps to run the LLM Core in a secure, hardware-based Trusted Execution Environment (TEE).
 
 > **Note:** For an overview and local deployment instructions, see the [main README](../README.md).
 
