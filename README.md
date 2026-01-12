@@ -4,7 +4,7 @@ This repository contains the reference implementation of the TCS (Transparent Co
 
 ## Implementation Overview
 
-The TCS framework addresses a fundamental _trust asymmetry_ in confidential computing systems: service providers can verify the confidentiality state of their infrastructure through remote attestation, but end users, the actual data owners, cannot independently verify the provider's confidentiality claims. While providers may assert that their workloads run in genuine TEEs, users must trust these assertions without cryptographic proof. This implementation provides a working prototype that closes this gap, enabling clients to independently verify that their sessions are bound to genuine TEEs executing authorized workloads through transparent, client-initiated attestation protocols.
+The TCS framework addresses a fundamental **trust asymmetry** in confidential computing systems: service providers can verify the confidentiality state of their infrastructure through remote attestation, but end users, the actual data owners, cannot independently verify the provider's confidentiality claims. While providers may assert that their workloads run in genuine TEEs, users must trust these assertions without cryptographic proof. This implementation provides a working prototype that closes this gap, enabling clients to independently verify that their sessions are bound to genuine TEEs executing authorized workloads through transparent, client-initiated attestation protocols.
 
 The system instantiates the **four principal architectural components** defined in the paper (Section 5):
 
