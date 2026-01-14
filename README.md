@@ -1,6 +1,6 @@
-# Transparent Confidential Services for Trusted Computations
+# Transparent Confidential Service for Trusted Computations
 
-# (Conference adapated repository with anonymization)
+## (Conference adapated repository with anonymization)
 
 This repository contains the reference implementation of the TCS (Transparent Confidential Service) framework accompanying the paper _"Transparent Confidential Service for Trusted Computations"_. The implementation demonstrates how client-centric attestation transforms opaque remote attestation mechanisms into transparent, user-verifiable protocols for distributed confidential computing services.
 
